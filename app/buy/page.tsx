@@ -1,6 +1,10 @@
-"use client";
-export const revalidate = 60;
+'use client';
 
 export default function BuyPage() {
-  return <div className="p-10">Buy page coming soon.</div>;
+  return (
+    <div className="p-10">
+      <h1 className="text-3xl font-bold">Buy Page Working
+✅</h1>
+    </div>
+  );
 }
