@@ -1,22 +1,90 @@
+// components/Header.tsx
+"use client";
+
 import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+
+const NAV = [
+  { href: "/", label: "Home" },
+  { href: "/buy", label: "Buy" },
+  { href: "/rent", label: "Rent" },
+  { href: "/agents", label: "Agents" },
+  { href: "/contact", label: "Contact" },
+];
 
 export default function Header() {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+
   return (
-    <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b">
-      <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <img src="/logo.png" alt="SinghStates" className="h-8 w-auto" />
-        </Link>
-        <nav className="hidden md:flex items-center gap-6 text-sm">
-          <Link href="/buy" className="hover:text-brand-600">Buy</Link>
-          <Link href="/rent" className="hover:text-brand-600">Rent</Link>
-          <Link href="/agents" className="hover:text-brand-600">Agents</Link>
-          <Link href="/contact" className="hover:text-brand-600">Contact</Link>
-        </nav>
-        <div className="flex items-center gap-2 text-sm">
-          <a href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP?.replace('+','') || ''}`} className="px-3 py-1.5 rounded-lg border hover:bg-slate-50">WhatsApp</a>
-          <a href={`tel:${process.env.NEXT_PUBLIC_PHONE || ''}`} className="px-3 py-1.5 rounded-lg bg-brand-600 text-white hover:bg-brand-500">Call Now</a>
+    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b">
+      <div className="mx-auto max-w-6xl px-4">
+        <div className="flex h-16 items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src="/logo.svg"
+              alt="Singh States"
+              width={36}
+              height={36}
+              priority
+            />
+            <span className="text-xl font-semibold tracking-wide">
+              SINGH <span className="font-normal">STATES</span>
+            </span>
+          </Link>
+
+          {/* desktop nav */}
+          <nav className="hidden md:flex items-center gap-6">
+            {NAV.map((item) => {
+              const active = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={text-sm ${
+                    active ? "text-blue-700 font-semibold" : "text-gray-700"
+                  } hover:text-blue-700 transition}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* mobile toggle */}
+          <button
+            className="md:hidden inline-flex items-center justify-center rounded-md p-2 border"
+            onClick={() => setOpen((v) => !v)}
+            aria-label="Toggle menu"
+          >
+            ☰
+          </button>
         </div>
+
+        {/* mobile menu */}
+        {open && (
+          <div className="md:hidden pb-3">
+            <nav className="flex flex-col gap-2">
+              {NAV.map((item) => {
+                const active = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={px-2 py-1 rounded ${
+                      active ? "bg-blue-50 text-blue-700" : "text-gray-700"
+                    }}
+                    onClick={() => setOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+        )}
       </div>
     </header>
   );
