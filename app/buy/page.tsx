@@ -1,46 +1,106 @@
-"use client";
-import { useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { properties } from "@/lib/properties";
-import PropertyCard from "@/components/PropertyCard";
+'use client';
+
+import React from 'react';
+import { useSearchParams } from 'next/navigation';
+
+// ✅ Build errors fix
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
+// (Relative paths so alias की जरूरत नहीं)
+import SearchBar from '../../components/SearchBar';
+import PropertyCard from '../../components/PropertyCard';
+
+// ---- Helpers
+const toNumber = (v: string | null, fallback = 0) => {
+  if (!v) return fallback;
+  const n = Number(v);
+  return Number.isFinite(n) && n >= 0 ? n : fallback;
+};
+const toLower = (v: string | null) => (v ? v.toLowerCase() : 'all');
+
+// ---- Dummy data (अगर आपके पास lib/properties.ts है तो उसे import करके
+//  इस array की जगह उसका डेटा use कर सकते हो)
+const LISTINGS = [
+  {
+    id: 1,
+    title: '2 BHK Apartment – Suncity',
+    price: 2800000,
+    type: '2bhk',
+    address: 'Sector 35, Suncity',
+    city: 'rohtak',
+    image: '/public/logo.svg', // replace with real image if needed
+  },
+  {
+    id: 2,
+    title: '3 BHK Apartment – City Center',
+    price: 4200000,
+    type: '3bhk',
+    address: 'City Center, Rohtak',
+    city: 'rohtak',
+    image: '/public/logo.svg',
+  },
+  {
+    id: 3,
+    title: 'Residential Plot – Jhajjar Road',
+    price: 1600000,
+    type: 'plot',
+    address: 'Jhajjar Road',
+    city: 'rohtak',
+    image: '/public/logo.svg',
+  },
+  {
+    id: 4,
+    title: 'Luxury Villa – Premium Block',
+    price: 9500000,
+    type: 'villa',
+    address: 'Premium Block, Rohtak',
+    city: 'rohtak',
+    image: '/public/logo.svg',
+  },
+];
+
+// ---- Page
 export default function BuyPage() {
   const sp = useSearchParams();
-  const [q, setQ] = useState(sp.get("q") || "");
-  const [type, setType] = useState(sp.get("type") || "All");
-  const [min, setMin] = useState(sp.get("min") || "");
-  const [max, setMax] = useState(sp.get("max") || "");
 
-  const list = useMemo(()=>{
-    return properties.filter(p=>{
-      const text = (p.title + p.address + p.city + p.type).toLowerCase();
-      const okQ = q ? text.includes(q.toLowerCase()) : true;
-      const okT = type==="All" ? true : p.type===type;
-      const price = p.price;
-      const okMin = min ? price >= Number(min) : true;
-      const okMax = max ? price <= Number(max) : true;
-      return okQ && okT && okMin && okMax;
-    });
-  }, [q,type,min,max]);
+  // URL params: ?type=2bhk&min=10&max=50&city=rohtak  (price लाखों में नहीं, रुपये में)
+  const type = toLower(sp.get('type')); // 'all' | '1bhk' | '2bhk' | '3bhk' | 'plot' | 'villa'
+  const city = toLower(sp.get('city')); // e.g., 'rohtak'
+  const min = toNumber(sp.get('min'), 0);
+  const max = toNumber(sp.get('max'), Number.MAX_SAFE_INTEGER);
+
+  const filtered = LISTINGS.filter((p) => {
+    const okType = type === 'all' ? true : p.type.toLowerCase() === type;
+    const okCity = city ? p.city.toLowerCase().includes(city) : true;
+    const okPrice = p.price >= min && p.price <= max;
+    return okType && okCity && okPrice;
+  });
 
   return (
-    <div className="container-ss py-10">
-      <h1 className="text-2xl font-semibold mb-4">Properties in Rohtak</h1>
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 mb-6">
-        <input className="rounded-lg border px-3 py-2" placeholder="Search"
-          value={q} onChange={e=>setQ(e.target.value)} />
-        <select className="rounded-lg border px-3 py-2" value={type} onChange={e=>setType(e.target.value)}>
-          {["All","Apartment","Villa","Plot","Commercial"].map(v=> <option key={v}>{v}</option>)}
-        </select>
-        <input className="rounded-lg border px-3 py-2" placeholder="Min ₹" inputMode="numeric" value={min} onChange={e=>setMin(e.target.value)} />
-        <input className="rounded-lg border px-3 py-2" placeholder="Max ₹" inputMode="numeric" value={max} onChange={e=>setMax(e.target.value)} />
-      </div>
+    <div className="container mx-auto px-4 py-8 space-y-8">
+      {/* Top search/filters */}
+      <SearchBar />
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {list.map(p => <PropertyCard key={p.id} p={p} />)}
-        {list.length===0 && <p>No properties match your filters.</p>}
+      {/* Results */}
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {filtered.length > 0 ? (
+          filtered.map((item) => (
+            <PropertyCard
+              key={item.id}
+              title={item.title}
+              price={item.price}
+              address={item.address}
+              city="Rohtak"
+              imageUrl={item.image}
+              type={item.type}
+            />
+          ))
+        ) : (
+          <div className="col-span-full text-center text-gray-600">
+            No properties match your filters. Try changing the type/price range.
+          </div>
+        )}
       </div>
     </div>
   );
