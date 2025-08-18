@@ -1,31 +1,19 @@
-Lalit 1, [8/18/2025 12:23 PM]
-// app/buy/page.tsx
 "use client";
 
 import React, { useMemo, useState } from "react";
 
-/**
- * IMPORTANT:
- *  - Build cache errors को avoid करने के लिए revalidate number में रखा है.
- *  - External images से domain त्रुटि न आए, इसलिए local /public/logo.svg यूज़ किया गया है.
- */
 export const revalidate = 60;
-
-// Optional hard cache bypass (जरूरत पड़े तभी ON करें)
-// export const dynamic = "force-dynamic";
-// export const fetchCache = "force-no-store";
 
 type Property = {
   id: string;
   title: string;
-  price: number;         // in INR
+  price: number;         // INR
   address: string;
   city: string;
   type: "apartment" | "house" | "plot" | "shop";
   imageUrl: string;      // local image
 };
 
-// Demo data — बाद में असली listings यहाँ/DB से लाना
 const PROPERTIES: Property[] = [
   {
     id: "P-1001",
@@ -74,7 +62,6 @@ const TYPES = [
 ] as const;
 
 export default function BuyPage() {
-  // Filters
   const [q, setQ] = useState<string>("");
   const [type, setType] = useState<string>("all");
   const [min, setMin] = useState<string>("");
@@ -83,7 +70,8 @@ export default function BuyPage() {
   const filtered = useMemo(() => {
     const qlc = q.trim().toLowerCase();
     const minN = Number.isFinite(Number(min)) ? Number(min) : 0;
-    const maxN = Number.isFinite(Number(max)) && max !== "" ? Number(max) : Number.MAX_SAFE_INTEGER;
+    const maxN =
+      Number.isFinite(Number(max)) && max !== "" ? Number(max) : Number.MAX_SAFE_INTEGER;
 
     return PROPERTIES.filter((p) => {
       const textHit =
@@ -136,8 +124,7 @@ export default function BuyPage() {
           className="border rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
         />
 
-Lalit 1, [8/18/2025 12:23 PM]
-<input
+        <input
           type="number"
           inputMode="numeric"
           value={max}
@@ -147,14 +134,13 @@ Lalit 1, [8/18/2025 12:23 PM]
         />
       </div>
 
-      {/* List */}
+{/* List */}
       <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((p) => (
           <div
             key={p.id}
             className="rounded-xl border shadow-sm hover:shadow-md transition overflow-hidden bg-white"
           >
-            {/* image area – local placeholder so Next/Image domain issue नहीं होगा */}
             <div className="h-40 w-full bg-gray-100 flex items-center justify-center">
               <img src={p.imageUrl} alt={p.title} className="h-24 w-24 opacity-80" />
             </div>
@@ -162,8 +148,12 @@ Lalit 1, [8/18/2025 12:23 PM]
             <div className="p-4 space-y-1">
               <div className="text-sm uppercase tracking-wide text-gray-500">{p.type}</div>
               <h3 className="text-lg font-medium leading-snug">{p.title}</h3>
-              <div className="text-sm text-gray-600">{p.address}, {p.city}</div>
-              <div className="mt-2 text-blue-700 font-semibold">₹ {p.price.toLocaleString("en-IN")}</div>
+              <div className="text-sm text-gray-600">
+                {p.address}, {p.city}
+              </div>
+              <div className="mt-2 text-blue-700 font-semibold">
+                ₹ {p.price.toLocaleString("en-IN")}
+              </div>
             </div>
 
             <div className="px-4 pb-4">
