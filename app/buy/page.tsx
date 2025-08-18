@@ -3,6 +3,8 @@ import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { properties } from "@/lib/properties";
 import PropertyCard from "@/components/PropertyCard";
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default function BuyPage() {
   const sp = useSearchParams();
