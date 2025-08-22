@@ -6,7 +6,7 @@ export default function Hero() {
     <section className="relative overflow-hidden">
       {/* Dark navy gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#0b1a3a] via-[#122350] to-[#1c2d66]" />
-      {/* Decorative light vignette */}
+      {/* Soft light vignette */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.15),transparent_60%)]" />
 
       <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-8 px-4 py-16 md:grid-cols-2 md:py-20">
@@ -19,16 +19,10 @@ export default function Hero() {
           </p>
 
           <div className="mt-6 flex gap-3">
-            <Link
-              href="/buy"
-              className="rounded-lg bg-yellow-400 px-5 py-3 font-semibold text-slate-900 hover:brightness-95"
-            >
+            <Link href="/buy" className="rounded-lg bg-yellow-400 px-5 py-3 font-semibold text-slate-900 hover:brightness-95">
               Explore Properties
             </Link>
-            <Link
-              href="/contact"
-              className="rounded-lg border border-slate-300/60 px-5 py-3 font-semibold text-white hover:bg-white/10"
-            >
+            <Link href="/contact" className="rounded-lg border border-slate-300/60 px-5 py-3 font-semibold text-white hover:bg-white/10">
               Get in Touch
             </Link>
           </div>
