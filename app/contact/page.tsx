@@ -1,7 +1,5 @@
 'use client';
 
-export const revalidate = 60;
-
 export default function ContactPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
