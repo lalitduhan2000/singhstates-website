@@ -2,8 +2,6 @@
 
 import { useState } from 'react';
 
-export const revalidate = 60;
-
 export default function RentPage() {
   const [sending, setSending] = useState(false);
   const [ok, setOk] = useState<null | boolean>(null);
