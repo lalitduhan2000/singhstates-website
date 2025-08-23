@@ -10,11 +10,11 @@ export default function Hero() {
           src="/hero.jpg"          // public/hero.jpg से ली जाएगी — remote config की जरूरत नहीं
           alt="City skyline"
           fill
-          className="object-cover"
+          className="object-cover z-0"
           priority
         />
         {/* Dark navy overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0b1a3a]/90 via-[#122550]/85 to-[#1c2d66]/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0b1a3a] via-[#122550] to-[#1c2d66] opacity-80 z-10"></div> />
       </div>
 
       {/* Foreground content */}
