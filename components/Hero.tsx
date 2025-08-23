@@ -14,7 +14,7 @@ export default function Hero() {
           priority
         />
         {/* Dark navy overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0b1a3a] via-[#122550] to-[#1c2d66] opacity-80 z-10"></div> />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0b1a3a] via-[#122550] to-[#1c2d66] opacity-80 z-10" />
       </div>
 
       {/* Foreground content */}
