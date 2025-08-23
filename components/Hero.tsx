@@ -21,8 +21,8 @@ export default function Hero() {
       <div className="absolute inset-0">
         <div className="mx-auto flex h-full max-w-6xl items-center px-4">
           <div className="max-w-xl">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-white">
-              Find Your Dream Property in Rohtak
+            <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-5xl">
+              Find Your Dream Property in Rohtak [TEST]
             </h1>
             <p className="mt-3 text-slate-200">
               Explore verified listings of homes, plots and rentals with SinghStates — trusted real estate in Rohtak.
