@@ -14,11 +14,13 @@ export default function Hero() {
           priority
         />
         {/* Dark navy overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0b1a3a] via-[#122550] to-[#1c2d66] opacity-80 z-10" />
+        <div
+  className="absolute inset-0 bg-gradient-to-b from-[#0b1a3a] via-[#122550] to-[#1c2d66] opacity-80 z-10 pointer-events-none"aria-hidden="true"
+/>
       </div>
 
       {/* Foreground content */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0" z-20">
         <div className="mx-auto flex h-full max-w-6xl items-center px-4">
           <div className="max-w-xl">
             <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-5xl">
