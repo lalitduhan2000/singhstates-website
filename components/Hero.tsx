@@ -7,27 +7,29 @@ export default function Hero() {
       {/* Background image */}
       <div className="relative h-[520px] md:h-[560px]">
         <Image
-          src="/hero.jpg"          // public/hero.jpg से ली जाएगी — remote config की जरूरत नहीं
+          src="/hero.jpg"
           alt="City skyline"
           fill
           className="object-cover z-0"
           priority
         />
-        {/* Dark navy overlay */}
+        {/* Dark overlay */}
         <div
-  className="absolute inset-0 bg-gradient-to-b from-[#0b1a3a] via-[#122550] to-[#1c2d66] opacity-80 z-10 pointer-events-none"aria-hidden="true"
-/>
+          className="absolute inset-0 bg-gradient-to-b from-[#0b1a3a] via-[#122550] to-[#1c2d66] opacity-80 z-10 pointer-events-none"
+          aria-hidden="true"
+        />
       </div>
 
       {/* Foreground content */}
-      <div className="absolute inset-0" z-20">
+      <div className="absolute inset-0 z-20">
         <div className="mx-auto flex h-full max-w-6xl items-center px-4">
           <div className="max-w-xl">
             <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-5xl">
               Find Your Dream Property in Rohtak [TEST]
             </h1>
             <p className="mt-3 text-slate-200">
-              Explore verified listings of homes, plots and rentals with SinghStates — trusted real estate in Rohtak.
+              Explore verified listings of homes, plots and rentals with
+              SinghStates — trusted real estate in Rohtak.
             </p>
             <div className="mt-6 flex gap-3">
               <Link
